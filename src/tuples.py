@@ -58,7 +58,7 @@ class Tuple:
             self.w - other.w,
         )
     
-    def __eq__(self, other: object) -> bool:
+    def __eq__(self, other: Tuple) -> bool:
         """Compare tuples with EPSILON tolerance.
 
         Returns True if all components are equal within a small margin
@@ -70,6 +70,15 @@ class Tuple:
                 and equal(self.y, other.y)
                 and equal(self.z, other.z)
                 and equal(self.w, other.w))
+    
+    def __neg__(self) -> Tuple:
+        """Return a new Tuple with all components negated."""
+        return Tuple(
+            -self.x,
+            -self.y,
+            -self.z,
+            -self.w
+        )
     
 def point(x, y, z) -> Tuple:
     """Create a point at coordinates (x, y, z)."""

@@ -85,3 +85,14 @@ def test_subtract_vector_from_point():
     assert p - v == expected
     assert expected.is_point
     assert tuples.equal(expected.w, 1.0)
+
+def test_negate_tuple():
+    """Each component of the tuple should be negated, including w."""
+    p = tuples.point(1, 2, 3)  # w=1.0
+    v = tuples.vector(4, 5, 6) # w=0.0
+
+    negated_p = tuples.Tuple(-1, -2, -3, -1) 
+    negated_v = tuples.Tuple(-4, -5, -6, 0) 
+
+    assert -p == negated_p
+    assert -v == negated_v
