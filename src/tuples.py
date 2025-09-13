@@ -125,7 +125,28 @@ class Tuple:
             self.z / mag,
             self.w / mag
         )
+    
+    def dot_product(self, other: Tuple) -> float:
+        """Return dot product, AKA scalar product or inner product, of two tuples.
+        
+        Notes:
+            - The dot product of two unit vectors is the cosine of the angle between them.
+            - The smaller the dot product, the larger the angle between the vectors.
+            - Useful for rays intersecting with objects and when computing shading on a surface.
 
+        Examples:
+            - Dot product of perpendicular unit vectors = 0
+            - Dot product of parallel (identical) unit vectors = 1 
+            - Dot product of opposite unit vectors = -1
+        """
+        if not isinstance(other, Tuple):
+            return NotImplemented
+        return (
+            self.x * other.x +
+            self.y * other.y +
+            self.z * other.z +
+            self.w * other.w
+        )
     
 def point(x, y, z) -> Tuple:
     """Create a point at coordinates (x, y, z)."""

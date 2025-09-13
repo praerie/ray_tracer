@@ -157,3 +157,20 @@ def test_normalize_to_unit_vector():
     expected = tuples.Tuple(3/mag, 6/mag, 9/mag, 0)
 
     assert unit == expected
+
+def test_dot_product():
+    """The dot product of two vectors equals the cosine of the angle between them.
+
+    Examples:
+    - Dot product of perpendicular unit vectors = 0
+    - Dot product of parallel unit vectors = 1
+    - Dot product of opposite unit vectors = -1
+    """
+    v1 = tuples.vector(1, 0, 0)  # unit x
+    v2 = tuples.vector(0, 1, 0)  # unit y
+    v3 = tuples.vector(1, 0, 0)  # same as v1
+    v4 = tuples.vector(-1, 0, 0) # opposite direction
+
+    assert tuples.equal(v1.dot_product(v2), 0.0)   # perpendicular
+    assert tuples.equal(v1.dot_product(v3), 1.0)   # parallel
+    assert tuples.equal(v1.dot_product(v4), -1.0)  # opposite
