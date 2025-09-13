@@ -127,12 +127,15 @@ class Tuple:
         )
     
     def dot_product(self, other: Tuple) -> float:
-        """Return dot product, AKA scalar product or inner product, of two tuples.
+        """Return dot product, AKA scalar product or inner product, of two tuples: a⋅b=|a||b|cos(θ)
         
         Notes:
             - The dot product of two unit vectors is the cosine of the angle between them.
+            - Geometrically, encodes angles and alignment between two directions
+            - Defined on direction (not position), so w is unneeded; a point is in invalid parameter.
             - The smaller the dot product, the larger the angle between the vectors.
             - Useful for rays intersecting with objects and when computing shading on a surface.
+            - Applies to vectors of any dimension, not just 3. 
 
         Examples:
             - Dot product of perpendicular unit vectors = 0
@@ -141,12 +144,15 @@ class Tuple:
         """
         if not isinstance(other, Tuple):
             return NotImplemented
-        return (
-            self.x * other.x +
-            self.y * other.y +
-            self.z * other.z +
-            self.w * other.w
-        )
+        if self.is_vector:
+            return (
+                self.x * other.x +
+                self.y * other.y +
+                self.z * other.z +
+                self.w * other.w
+            )
+        else:
+            return ValueError("Dot product cannot be performed on points.")
     
 def point(x, y, z) -> Tuple:
     """Create a point at coordinates (x, y, z)."""
