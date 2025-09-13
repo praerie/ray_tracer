@@ -123,3 +123,37 @@ def test_divide_tuple_by_fraction():
     expected = tuples.Tuple(4, -3, 2, 0.5)
 
     assert p / scalar == expected
+
+# The magnitude (length) of a vector is the square root of the sum of squares.
+
+def test_magnitude_of_unit_x():
+    v = tuples.vector(1, 0, 0)
+    assert tuples.equal(v.magnitude(), 1.0)
+    assert v.is_unit_vector
+
+def test_magnitude_of_unit_y():
+    v = tuples.vector(0, 1, 0)
+    assert tuples.equal(v.magnitude(), 1.0)
+    assert v.is_unit_vector
+
+def test_magnitude_of_unit_z():
+    v = tuples.vector(0, 0, 1)
+    assert tuples.equal(v.magnitude(), 1.0)
+    assert v.is_unit_vector
+
+def test_magnitude_of_negative_vector():
+    v = tuples.vector(-1, -2, -3)
+    expected = 14 ** 0.5
+    assert tuples.equal(v.magnitude(), expected)
+
+def test_normalize_to_unit_vector():
+    """Normalized vectors have magnitudes of 1."""
+    v = tuples.vector(3, 6, 9)
+    unit = v.normalize()
+
+    assert unit.is_unit_vector
+
+    mag = v.magnitude()
+    expected = tuples.Tuple(3/mag, 6/mag, 9/mag, 0)
+
+    assert unit == expected

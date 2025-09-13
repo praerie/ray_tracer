@@ -1,6 +1,8 @@
 from __future__ import annotations
 from src.utils.math_utils import equal
 from dataclasses import dataclass
+import math
+
 
 @dataclass(frozen=True)
 class Tuple:
@@ -24,6 +26,15 @@ class Tuple:
     def is_vector(self) -> bool:
         """Return True if this tuple represents a vector (w ≈ 0.0)."""
         return equal(self.w, 0.0)
+    
+    @property
+    def is_unit_vector(self) -> bool:
+        """Returns True if this tuple is a unit vector, i.e. has a magnitude of 1. 
+        
+        Note: Vectors with magnitudes of 1 are called unit vectors,
+        which are useful in computing view matrix, determining the direction perpendicular 
+        to a surface, and when generating rays to cast into scene."""
+        return self.is_vector and equal(self.magnitude(), 1.0)
     
     def __add__(self, other: Tuple) -> Tuple:
         """Add two tuples component-wise.
@@ -97,6 +108,24 @@ class Tuple:
             self.z / scalar,
             self.w / scalar
         )
+    
+    def magnitude(self) -> float:
+        """Return the magnitude (length) of the vector."""
+        return math.sqrt(
+            self.x**2 + self.y**2 + self.z**2 + self.w**2
+        )
+
+    def normalize(self) -> Tuple:
+        """Return a unit vector in the same direction as this vector.
+        Normalization is achieved by dividing each component by its magnitude."""
+        mag = self.magnitude()
+        return Tuple(
+            self.x / mag,
+            self.y / mag,
+            self.z / mag,
+            self.w / mag
+        )
+
     
 def point(x, y, z) -> Tuple:
     """Create a point at coordinates (x, y, z)."""
