@@ -96,3 +96,30 @@ def test_negate_tuple():
 
     assert -p == negated_p
     assert -v == negated_v
+
+def test_multiply_tuple_by_scalar():
+    """Multiplying a tuple by a scalar scales each component."""
+    p = tuples.point(1, 2, 9)
+    scalar = 3.27 
+
+    expected = tuples.Tuple(3.27, 6.54, 29.43, 3.27)
+
+    assert p * scalar == expected
+
+def test_multiply_tuple_by_fraction():
+    """Multiplying a tuple by a fraction scales each component."""
+    p = tuples.point(1, 2, 9)
+    fraction = 0.7
+
+    expected = tuples.Tuple(0.7, 1.4, 6.3, 0.7)
+
+    assert p * fraction == expected
+
+def test_divide_tuple_by_fraction():
+    """Dividing a tuple by a fraction scales each component by its reciprocal."""
+    p = tuples.point(8, -6, 4) 
+    scalar = 2
+
+    expected = tuples.Tuple(4, -3, 2, 0.5)
+
+    assert p / scalar == expected

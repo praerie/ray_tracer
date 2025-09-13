@@ -80,6 +80,24 @@ class Tuple:
             -self.w
         )
     
+    def __mul__(self, scalar: float) -> Tuple:
+        """Multiply all components of the tuple by a scalar."""
+        return Tuple(
+            self.x * scalar,
+            self.y * scalar,
+            self.z * scalar,
+            self.w * scalar
+        )
+
+    def __truediv__(self, scalar: float) -> Tuple:
+        """Divide all components of the tuple by a scalar."""
+        return Tuple(
+            self.x / scalar,
+            self.y / scalar, 
+            self.z / scalar,
+            self.w / scalar
+        )
+    
 def point(x, y, z) -> Tuple:
     """Create a point at coordinates (x, y, z)."""
     return Tuple(x, y, z, 1.0)
