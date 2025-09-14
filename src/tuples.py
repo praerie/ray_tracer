@@ -163,6 +163,7 @@ def cross_product(self, other: Tuple) -> Tuple:
         - Cross product of two vectors: a vector that is perpendicular 
         to both a and b, and thus normal to the plane containing them.
         - Order is important: x cross y = z, but y cross x = -z.
+        - Relevant for viewing transformations and rendering triangles.
         - Magnitude of the cross-product = area of the parallelogram 
         spanned by original two vectors.
     """
