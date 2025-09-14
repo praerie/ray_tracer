@@ -130,7 +130,7 @@ class Tuple:
 
 
 def dot_product(self, other: Tuple) -> float:
-    """Return dot product, AKA scalar product or inner product, of two tuples: a⋅b=|a||b|cos(θ)
+    """Return dot product, AKA scalar product or inner product, of two tuples.
     
     Notes:
         - The dot product of two unit vectors is the cosine of the angle between them.
@@ -162,6 +162,7 @@ def cross_product(self, other: Tuple) -> Tuple:
     Notes:
         - Cross product of two vectors: a vector that is perpendicular 
         to both a and b, and thus normal to the plane containing them.
+        - Order is important: x cross y = z, but y cross x = -z.
         - Magnitude of the cross-product = area of the parallelogram 
         spanned by original two vectors.
     """
