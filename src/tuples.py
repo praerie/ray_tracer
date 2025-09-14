@@ -44,7 +44,7 @@ class Tuple:
         - Point + Point -> invalid (w=2), neither point nor vector
         """
         if not isinstance(other, Tuple):
-            return NotImplemented
+            raise NotImplemented
         return Tuple(
             self.x + other.x,
             self.y + other.y,
@@ -61,7 +61,7 @@ class Tuple:
         - Vector - Point -> invalid (w=-1), neither point nor vector
         """
         if not isinstance(other, Tuple):
-            return NotImplemented
+            raise NotImplemented
         return Tuple(
             self.x - other.x,
             self.y - other.y,
@@ -76,7 +76,7 @@ class Tuple:
         of error. This avoids issues with floating-point precision.
         """
         if not isinstance(other, Tuple):
-            return NotImplemented
+            raise NotImplemented
         return (equal(self.x, other.x)
                 and equal(self.y, other.y)
                 and equal(self.z, other.z)
@@ -119,40 +119,63 @@ class Tuple:
         """Return a unit vector in the same direction as this vector.
         Normalization is achieved by dividing each component by its magnitude."""
         mag = self.magnitude()
+        if equal(mag, 0.0):
+            raise ValueError("Cannot normalize a zero vector.")
         return Tuple(
             self.x / mag,
             self.y / mag,
             self.z / mag,
             self.w / mag
         )
-    
-    def dot_product(self, other: Tuple) -> float:
-        """Return dot product, AKA scalar product or inner product, of two tuples: a⋅b=|a||b|cos(θ)
-        
-        Notes:
-            - The dot product of two unit vectors is the cosine of the angle between them.
-            - Geometrically, encodes angles and alignment between two directions
-            - Defined on direction (not position), so w is unneeded; a point is in invalid parameter.
-            - The smaller the dot product, the larger the angle between the vectors.
-            - Useful for rays intersecting with objects and when computing shading on a surface.
-            - Applies to vectors of any dimension, not just 3. 
 
-        Examples:
-            - Dot product of perpendicular unit vectors = 0
-            - Dot product of parallel (identical) unit vectors = 1 
-            - Dot product of opposite unit vectors = -1
-        """
-        if not isinstance(other, Tuple):
-            return NotImplemented
-        if self.is_vector:
-            return (
-                self.x * other.x +
-                self.y * other.y +
-                self.z * other.z +
-                self.w * other.w
-            )
-        else:
-            return ValueError("Dot product cannot be performed on points.")
+
+def dot_product(self, other: Tuple) -> float:
+    """Return dot product, AKA scalar product or inner product, of two tuples: a⋅b=|a||b|cos(θ)
+    
+    Notes:
+        - The dot product of two unit vectors is the cosine of the angle between them.
+        - Geometrically, encodes angles and alignment between two directions
+        - Defined on direction (not position), so w is unneeded; a point is in invalid parameter.
+        - The smaller the dot product, the larger the angle between the vectors.
+        - Useful for rays intersecting with objects and when computing shading on a surface.
+        - Applies to vectors of any dimension, not just 3. 
+
+    Examples:
+        - Dot product of perpendicular unit vectors = 0
+        - Dot product of parallel (identical) unit vectors = 1 
+        - Dot product of opposite unit vectors = -1
+    """
+    if not isinstance(other, Tuple):
+        raise NotImplemented
+    if not self.is_vector:
+        raise ValueError("Dot product cannot be performed on points.")
+    return (
+            self.x * other.x +
+            self.y * other.y +
+            self.z * other.z +
+            self.w * other.w
+        )
+        
+def cross_product(self, other: Tuple) -> Tuple:
+    """Return the cross product of two vectors.
+
+    Notes:
+        - Cross product of two vectors: a vector that is perpendicular 
+        to both a and b, and thus normal to the plane containing them.
+        - Magnitude of the cross-product = area of the parallelogram 
+        spanned by original two vectors.
+    """
+    if not isinstance(other, Tuple):
+        raise NotImplemented
+    if not (self.is_vector and other.is_vector):
+        raise ValueError("Cross product is only defined for vectors.")
+    else:
+        return Tuple(
+            self.y * other.z - self.z * other.y,
+            self.z * other.x - self.x * other.z,
+            self.x * other.y - self.y * other.x,
+            0.0
+        )
     
 def point(x, y, z) -> Tuple:
     """Create a point at coordinates (x, y, z)."""

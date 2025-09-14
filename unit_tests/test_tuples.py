@@ -171,6 +171,15 @@ def test_dot_product():
     v3 = tuples.vector(1, 0, 0)  # same as v1
     v4 = tuples.vector(-1, 0, 0) # opposite direction
 
-    assert tuples.equal(v1.dot_product(v2), 0.0)   # perpendicular
-    assert tuples.equal(v1.dot_product(v3), 1.0)   # parallel
-    assert tuples.equal(v1.dot_product(v4), -1.0)  # opposite
+    assert tuples.equal(tuples.dot_product(v1, v2), 0.0)   # perpendicular
+    assert tuples.equal(tuples.dot_product(v1, v3), 1.0)   # parallel
+    assert tuples.equal(tuples.dot_product(v1, v4), -1.0)  # opposite
+
+def test_cross_product():
+    """Cross product of two vectors."""
+    v1 = tuples.vector(1, 2, 3)
+    v2 = tuples.vector(-5, 5, -5)
+
+    expectation = tuples.Tuple(-25, -10, 15, 0.0)
+
+    assert tuples.cross_product(v1, v2) == expectation
