@@ -198,3 +198,49 @@ def test_normalized_colors_to_rgb():
     rgb = tuples.to_rgb(c)
 
     assert rgb == (255, 128, 0)
+
+def test_add_colors():
+    """Adding two colors adds their channels component-wise."""
+    c1 = tuples.Tuple.color(1.0, 0.2, 0.4)
+    c2 = tuples.Tuple.color(0.9, 1.0, 0.1)
+
+    expected = tuples.Tuple(1.9, 1.2, 0.5, 0.0)
+
+    assert c1 + c2 == expected
+
+def test_subtract_colors():
+    """Subtracting two colors subtracts their channels component-wise."""
+    c1 = tuples.Tuple.color(1.0, 0.9, 0.5)
+    c2 = tuples.Tuple.color(0.9, 0.1, 0.3)
+
+    expected = tuples.Tuple(0.1, 0.8, 0.2, 0.0)
+
+    assert c1 - c2 == expected
+
+def test_multiply_color_by_scalar():
+    """Multiplying a color by a scalar scales each channel."""
+    c = tuples.Tuple.color(0.2, 0.3, 0.4)
+    s = 2.5
+
+    expected = tuples.Tuple(0.5, 0.75, 1.0, 0.0)
+
+    assert c * s == expected
+
+def test_divide_color_by_scalar():
+    """Dividing a color by a scalar scales each channel by its reciprocal."""
+    c = tuples.Tuple.color(0.6, 0.9, 0.3)
+    s = 3.0
+
+    expected = tuples.Tuple(0.2, 0.3, 0.1, 0.0)
+
+    assert c / s == expected
+
+def test_hadamard_product_colors():
+    """Hadamard product (color * color) multiplies channels component-wise."""
+    c1 = tuples.Tuple.color(1.0, 0.2, 0.4)
+    c2 = tuples.Tuple.color(0.9, 1.0, 0.1)
+
+    result = c1.hadamard(c2)
+    expected = tuples.Tuple(0.9, 0.2, 0.04, 0.0)
+
+    assert result == expected

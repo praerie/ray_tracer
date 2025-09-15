@@ -44,7 +44,7 @@ class Tuple:
         return self.w == 0.0 and hasattr(self, "red")
     
     # --- color channel aliases ---
-    
+
     @property
     def red(self) -> float: return self.x
 
@@ -150,6 +150,23 @@ class Tuple:
             self.w / scalar
         )
     
+    # --- color operations ---
+
+    def hadamard(self, other: "Tuple") -> "Tuple":
+        """Multiply two colors component-wise (Hadamard product).
+        
+        Notes:
+            - Usually light (self) x surface (other) color.
+        """
+        if not isinstance(other, Tuple):
+            raise NotImplemented
+        return Tuple(
+            self.x * other.x,
+            self.y * other.y,
+            self.z * other.z,
+            0.0  # colors always have w=0.0
+        )
+
     # --- vector operations ---
 
     def magnitude(self) -> float:
